@@ -30,6 +30,7 @@ public class TerminalManager : MonoBehaviour
   [SerializeField]
   private VerticalLayoutGroup verticalLayoutGroup;
 
+
   public void Start()
   {
     RefocusInputField();

@@ -577,6 +577,7 @@ GameObject:
   - component: {fileID: 398125614}
   - component: {fileID: 398125613}
   - component: {fileID: 398125612}
+  - component: {fileID: 398125616}
   - component: {fileID: 398125618}
   - component: {fileID: 398125617}
   m_Layer: 5
@@ -662,13 +663,32 @@ RectTransform:
   - {fileID: 609068355}
   - {fileID: 1863541901}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &398125616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 398125611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c5900a91bcceca42944a30e786912bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  directoryLine: {fileID: 282036749}
+  repsonseLine: {fileID: 439552651}
+  userInputField: {fileID: 2088157890}
+  userInputLine: {fileID: 1332519464}
+  scrollRect: {fileID: 609068358}
+  commandList: {fileID: 247634620}
+  verticalLayoutGroup: {fileID: 247634624}
 --- !u!114 &398125617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1115,86 +1135,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 1
---- !u!1 &633820201
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 633820203}
-  - component: {fileID: 633820202}
-  - component: {fileID: 633820205}
-  - component: {fileID: 633820204}
-  m_Layer: 0
-  m_Name: LogicController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &633820202
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 633820201}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c5900a91bcceca42944a30e786912bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  directoryLine: {fileID: 282036749}
-  repsonseLine: {fileID: 439552651}
-  userInputField: {fileID: 2088157890}
-  userInputLine: {fileID: 1332519464}
-  scrollRect: {fileID: 609068358}
-  commandList: {fileID: 247634620}
-  verticalLayoutGroup: {fileID: 247634624}
---- !u!4 &633820203
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 633820201}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &633820204
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 633820201}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bc1c3bd667822448822aebe8a8d6ffd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TargetText: {fileID: 2057945919}
-  DoneWriting: 0
-  Delay: 0.05
---- !u!114 &633820205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 633820201}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ca67a65e0ea79642b087b0e52d1fe60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CodecWriter: {fileID: 633820204}
 --- !u!1 &888645808
 GameObject:
   m_ObjectHideFlags: 0
@@ -1823,7 +1763,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1332519464
 GameObject:
@@ -2484,8 +2424,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 914, y: -49.20117}
-  m_SizeDelta: {x: 723.9354, y: 223.4988}
+  m_AnchoredPosition: {x: 914, y: -242.70001}
+  m_SizeDelta: {x: 200, y: 30}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2057945919
 MonoBehaviour:
@@ -2517,7 +2457,7 @@ MonoBehaviour:
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: "Hack Status: In Progress \n[--------------------] 0%"
