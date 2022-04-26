@@ -3,106 +3,118 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using HaxorSim;
-using ColorPalette = HaxorSim.ColorPalette.Colors; 
+using ColorPalette = HaxorSim.ColorPalette.Colors;
 public class TerminalManager : MonoBehaviour
 {
 
-    [SerializeField]
-    private GameObject directoryLine;
+  [SerializeField]
+  private GameObject directoryLine;
 
-    [SerializeField]
-    private GameObject repsonseLine;
-
-    
-    [SerializeField]
-    private InputField userInputField;
+  [SerializeField]
+  private GameObject repsonseLine;
 
 
-    [SerializeField]
-    private GameObject userInputLine;
+  [SerializeField]
+  private InputField userInputField;
 
-    [SerializeField]
-    private ScrollRect scrollRect;
 
-    [SerializeField]
-    private GameObject commandList;
+  [SerializeField]
+  private GameObject userInputLine;
 
-    [SerializeField]
-    private VerticalLayoutGroup verticalLayoutGroup;
+  [SerializeField]
+  private ScrollRect scrollRect;
 
-    public void Start()
+  [SerializeField]
+  private GameObject commandList;
+
+  [SerializeField]
+  private VerticalLayoutGroup verticalLayoutGroup;
+
+  public void Start()
+  {
+    RefocusInputField();
+
+    //userInputLine = userInputField.textComponent;
+
+    //keyWords.CreateCommand()
+
+  }
+
+  // Creates events
+  // Logic for user interacting with terminal
+
+  private void Update()
+  {
+
+    if (Input.anyKeyDown)
     {
-
-        //userInputLine = userInputField.textComponent;
-        
-        //keyWords.CreateCommand()
-
+      RefocusInputField();
     }
 
-    // Creates events
-    // Logic for user interacting with terminal
-
-    private void Update()
+    if (userInputField.text != "" && Input.GetKeyDown(KeyCode.Return))
     {
-        //if (GUILayout.Button("Press Me"))
-        //    Debug.Log("Hello!");
-        //// Ensure that OnGUI can only be called once.
-        ////if (Event.current.type != EventType.Repaint) return;
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            //Debug.Log("PRESEED");
-            ClearInputField();
-            Debug.Log(userInputField.text);
 
-        }
+      // Stored Input Field
+      var storedInput = userInputField.text;
 
-        if (userInputField.text != "" &&  Input.GetKeyDown(KeyCode.Return)) {
+      ClearInputField();
 
-            // Stored Input Field
-            var storedInput = userInputField.text;
+      // Create new directory line to mimic history of commands.
+      AddCommandHistoryLine(storedInput);
 
-            Debug.Log("Stored input" + storedInput);
+      // Move user input back to end
+      userInputLine.transform.SetAsLastSibling();
 
-            ClearInputField();
+      // Move scroll rect all the way down to bottom line
+      // ScrollToBottom();
 
-            // Create new directory line to mimic history of commands.
-            AddCommandHistoryLine(storedInput);
-            Debug.Log("PRessed");
-    
-        }
+      // Refocus the input field
+      RefocusInputField();
     }
+  }
 
-    private void ClearInputField()
-    {
-        Debug.Log("CUrrent text is"+ directoryLine.GetComponentInChildren<Text>().text);
-        //directoryLine.GetComponentInChildren<Text>().text = Time.time.ToString();
-        userInputField.text = "";
-    }
+  private void ClearInputField()
+  {
+    Debug.Log("CUrrent text is" + directoryLine.GetComponentInChildren<Text>().text);
+    //directoryLine.GetComponentInChildren<Text>().text = Time.time.ToString();
+    userInputField.text = "";
+  }
 
-    // Create a command history line by adding in the user's input. 
-    private void AddCommandHistoryLine(string userInput)
-    {
-        Debug.Log("Adding new line");
-        // Size of the command entire command line.
-        Vector2 commandListSize = commandList.GetComponent<RectTransform>().sizeDelta;
+  // Create a command history line by adding in the user's input. 
+  private void AddCommandHistoryLine(string userInput)
+  {
+    Debug.Log("Adding new line");
+    // Size of the command entire command line.
+    Vector2 commandListSize = commandList.GetComponent<RectTransform>().sizeDelta;
 
-        // Get vertical spacing between each line in the vertical layout group
-        var spacing = verticalLayoutGroup.spacing;
-        // Get vertical height of a line of text. 
-        var verticalHeight = directoryLine.GetComponent<RectTransform>().sizeDelta.y;
-        // Grow the CommandLineContainer vertically
-        commandList.GetComponent<RectTransform>().sizeDelta = new Vector2(commandListSize.x, commandListSize.y + spacing + verticalHeight);
-        
-        // Instantiate a new command history line.
-        GameObject msg = Instantiate(directoryLine, commandList.transform);
-        // Ensure new line is at end of vertical layout.
-        msg.transform.SetSiblingIndex(commandList.transform.childCount - 1);
+    // Get vertical spacing between each line in the vertical layout group
+    var spacing = verticalLayoutGroup.spacing;
+    // Get vertical height of a line of text. 
+    var verticalHeight = directoryLine.GetComponent<RectTransform>().sizeDelta.y;
+    // Grow the CommandLineContainer vertically
+    commandList.GetComponent<RectTransform>().sizeDelta = new Vector2(commandListSize.x, commandListSize.y + spacing + verticalHeight);
 
-        // Set text of new Command history line.
-        //msg.GetComponentInChildren<Text>()[1].text = userInputLine.text;
-        msg.GetComponentsInChildren<Text>()[1].text = userInput;
-    }
+    // Instantiate a new command history line.
+    GameObject msg = Instantiate(directoryLine, commandList.transform);
 
+    // Ensure new line is at end of vertical layout.
+    // msg.transform.SetSiblingIndex(commandList.transform.childCount - 1);
+    msg.transform.SetAsLastSibling();
 
+    // Set text of new Command history line.
+    //msg.GetComponentInChildren<Text>()[1].text = userInputLine.text;
+    msg.GetComponentsInChildren<Text>()[1].text = userInput;
+  }
+
+  private void ScrollToBottom()
+  {
+    scrollRect.normalizedPosition = new Vector2(0, 0.3f);
+  }
+
+  private void RefocusInputField()
+  {
+    userInputField.ActivateInputField();
+    userInputField.Select();
+  }
 }
 
