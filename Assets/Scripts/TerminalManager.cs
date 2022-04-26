@@ -66,7 +66,7 @@ public class TerminalManager : MonoBehaviour
       userInputLine.transform.SetAsLastSibling();
 
       // Move scroll rect all the way down to bottom line
-      // ScrollToBottom();
+      ScrollToBottom();
 
       // Refocus the input field
       RefocusInputField();
@@ -108,7 +108,7 @@ public class TerminalManager : MonoBehaviour
 
   private void ScrollToBottom()
   {
-    scrollRect.normalizedPosition = new Vector2(0, 0.3f);
+    scrollRect.normalizedPosition = new Vector2(0, 0);
   }
 
   private void RefocusInputField()
