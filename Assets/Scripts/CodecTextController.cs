@@ -20,6 +20,10 @@ namespace HaxorSim
     "They didn't see that coming..."
   };
 
+    private string BadEnd = "We were supposed to get into the system... Those corpos are laughing at us. You disappointed me today.";
+
+    private string GoodEnd = "You really showed them today. I'm passing on the title of 'The One'. I know you'll continue to make me proud.";
+
 
 
     [SerializeField]

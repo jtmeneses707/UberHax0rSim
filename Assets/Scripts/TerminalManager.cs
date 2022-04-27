@@ -85,7 +85,7 @@ public class TerminalManager : MonoBehaviour
           {
             StartHack();
             AddCommandHistoryLine(storedInput);
-            StringToMatch = EventController.GenerateNewCommand();
+            StringToMatch = EventController.GenerateNewCommand(1, 1);
             CreateResponseLine("New command: " + StringToMatch);
             FinishTerminalReturn();
           }
@@ -192,19 +192,42 @@ public class TerminalManager : MonoBehaviour
     {
       EventController.Notify(Flag.SuccessfulHack);
       AddSuccessfullHackResponse();
+      EventController.ResetDefenseBar();
     }
     else
     {
       EventController.Notify(Flag.FailedHack);
       AddFailedHackResponse();
     }
-    StringToMatch = EventController.GenerateNewCommand();
+
+    StringToMatch = GenerateCommand();
+
+
     CreateResponseLine("New command: " + StringToMatch);
     // Debug.Log("String to match" + StringToMatch);
     FinishTerminalReturn();
   }
 
   /** USEFUL HELPER FUNCTIONS **/
+  private string GenerateCommand()
+  {
+    var distr = new float[] { 0.5f, 0.4f, 0.1f };
+    var prob = Random.Range(0f, 1f);
+    var str = "";
+    if (prob <= distr[0])
+    {
+      str = EventController.GenerateNewCommand(1, 1);
+    }
+    else if (prob > distr[0] && prob <= distr[0] + distr[1])
+    {
+      str = EventController.GenerateNewCommand(2, 1);
+    }
+    else
+    {
+      str = EventController.GenerateNewCommand(1, 2);
+    }
+    return str;
+  }
 
   private void GrowCommandLineContainer()
   {

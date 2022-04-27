@@ -18,50 +18,69 @@ namespace HaxorSim
     // 
     public string CreateCommand(int difficulty = 1, int numCommands = 1)
     {
-      List<string> commands = new List<string>();
-
-      // Full command string includes all commands, with variable number of context words.
-      // Each separate command has a compound symbol between them. 
-
-      var fullCommandString = "";
-
-      // Create number of commands;
-      for (int i = 0; i < numCommands; i++)
+      var command = "";
+      command += getRandomString(actionWords) + " ";
+      command += getRandomString(contextWords);
+      if (difficulty > 1)
       {
-
-        var actionWord = getRandomString(actionWords);
-
-        var contextWord = "";
-
-        // Create a longer command from adding more context words
-        for (int j = 0; j < difficulty; j++)
-        {
-          // Add space if command has more than one context word.
-          if (j > 1)
-          {
-            contextWord += " ";
-          }
-
-          contextWord += getRandomString(contextWords);
-        }
-
-        var fullCommand = actionWord + " " + contextWord;
-        commands.Add(fullCommand);
+        command += " " + getRandomString(contextWords);
       }
 
-
-
-      for (int i = 0; i < commands.Count; i++)
+      if (numCommands > 1)
       {
-        if (i > 1)
-        {
-          fullCommandString += " ";
-        }
-
-        fullCommandString += commands[i];
+        command += " " + getRandomString(compoundSymbols) + " " + getRandomString(actionWords) + " " + getRandomString(contextWords);
       }
 
-      return fullCommandString;
+      return command;
+
+
+      // List<string> commands = new List<string>();
+
+      // // Full command string includes all commands, with variable number of context words.
+      // // Each separate command has a compound symbol between them. 
+
+      // var fullCommandString = "";
+
+      // // Create number of commands;
+      // for (int i = 0; i < numCommands; i++)
+      // {
+
+      //   var actionWord = getRandomString(actionWords);
+
+      //   var contextWord = "";
+
+
+
+
+      //   // // Create a longer command from adding more context words
+      //   // for (int j = 0; j < difficulty; j++)
+      //   // {
+      //   //   // Add space if command has more than one context word.
+      //   //   if (j > 1)
+      //   //   {
+      //   //     contextWord += " ";
+      //   //   }
+
+      //   //   contextWord += getRandomString(contextWords);
+      //   // }
+
+      //   var fullCommand = actionWord + " " + contextWord;
+      //   commands.Add(fullCommand);
+      // }
+
+
+
+      // for (int i = 0; i < commands.Count; i++)
+      // {
+      //   if (i > 1)
+      //   {
+      //     fullCommandString += " ";
+      //   }
+
+      //   fullCommandString += commands[i];
+      // }
+
+      // return fullCommandString;
 
     }
 
