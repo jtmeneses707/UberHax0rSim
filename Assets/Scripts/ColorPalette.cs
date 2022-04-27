@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace HaxorSim
 {
-  public class ColorPalette : ScriptableObject
+  public class ColorPalette : MonoBehaviour
   {
     public enum Colors
     {

@@ -37,9 +37,15 @@ public class TerminalManager : MonoBehaviour
   [SerializeField]
   private string StringToMatch;
 
+  [SerializeField]
+  private CodecTextWriter CodecTextWriter;
+
+
 
   public void Start()
   {
+    // userInputField.DeactivateInputField();
+    // userInputField.enabled = false;
     RefocusInputField();
   }
 
@@ -85,49 +91,61 @@ public class TerminalManager : MonoBehaviour
       RefocusInputField();
     }
 
-    if (userInputField.text != "" && Input.GetKeyDown(KeyCode.Return))
+    if (EventController.GetCurrentEvent() == Flag.Intro)
     {
-      NormalizeUserInput();
-      var storedInput = userInputField.text;
-      // Gameplay loop for init hack start gane.
-      if (EventController.GetCurrentEvent() == Flag.Intro)
+
+      if (userInputField.text != "" && Input.GetKeyDown(KeyCode.Return))
       {
-        if (StringMatches(storedInput, "hack start"))
+        NormalizeUserInput();
+        var storedInput = userInputField.text;
+        // Gameplay loop for init hack start gane.
+        if (EventController.GetCurrentEvent() == Flag.Intro)
         {
-          StartHack();
+
+          if (StringMatches(storedInput, "hack start"))
+          {
+            StartHack();
+          }
+          else
+          {
+            BasicTerminalReturn();
+          }
+
         }
-        BasicTerminalReturn();
       }
-
-      // Basic gameplay loop
-      else
-      {
-
-      }
-
-      // if (StringMatches(StringToMatch, userInputField.text) && EventController.GetCurrentEvent() == Flag.Intro)
-      // {
-      //   EventController.InitHackingUI();
-      // }
-
-      // else if (!StringMatches)
-      // Stored Input Field
-      // var storedInput = userInputField.text;
-
-      // ClearInputField();
-
-      // // Create new directory line to mimic history of commands.
-      // AddCommandHistoryLine(storedInput);
-
-      // SetInputFieldToBottom();
-
-
-      // // Move scroll rect all the way down to bottom line
-      // ScrollToBottom();
-
-      // // Refocus the input field
-      // RefocusInputField();
     }
+
+    // Basic gameplay loop
+    else if (Input.GetKeyDown(KeyCode.Return))
+    {
+      GameplayTerminalReturn();
+    }
+
+
+    // if (StringMatches(StringToMatch, userInputField.text) && EventController.GetCurrentEvent() == Flag.Intro)
+    // {
+    //   EventController.InitHackingUI();
+    // }
+
+    // else if (!StringMatches)
+    // Stored Input Field
+    // var storedInput = userInputField.text;
+
+    // ClearInputField();
+
+    // // Create new directory line to mimic history of commands.
+    // AddCommandHistoryLine(storedInput);
+
+    // SetInputFieldToBottom();
+
+
+    // // Move scroll rect all the way down to bottom line
+    // ScrollToBottom();
+
+    // // Refocus the input field
+    // RefocusInputField();
+
+
   }
 
   private void ClearInputField()
@@ -156,13 +174,50 @@ public class TerminalManager : MonoBehaviour
 
     // Ensure new line is at end of vertical layout.
     // msg.transform.SetSiblingIndex(commandList.transform.childCount - 1);
-    msg.transform.SetAsLastSibling();
+    SetInputFieldToBottom();
 
     // Set text of new Command history line.
+
     msg.GetComponentsInChildren<Text>()[1].text = userInput;
   }
 
-  // private void
+  private void BasicTerminalReturn()
+  {
+    AddCommandHistoryLine(userInputField.text);
+    FinishTerminalReturn();
+  }
+
+  // Function for the end of a terminal return. 
+  // End of a terminal return is always setting the user input field back to the bottom.
+  private void FinishTerminalReturn()
+  {
+    SetInputFieldToBottom();
+    // Move scroll rect all the way down to bottom line
+    ScrollToBottom();
+    // Refocus the input field
+    RefocusInputField();
+    ClearInputField();
+  }
+
+  private void GameplayTerminalReturn()
+  {
+    AddCommandHistoryLine(userInputField.text);
+
+    // TODO: NEED TO ADD RESPONSE FIELDS FOR FAILURE AND SUCCESS.
+    if (StringMatches(StringToMatch, userInputField.text))
+    {
+      EventController.Notify(Flag.SuccessfulHack);
+    }
+    else
+    {
+      EventController.Notify(Flag.FailedHack);
+    }
+    StringToMatch = EventController.GenerateNewCommand();
+    Debug.Log("String to match" + StringToMatch);
+    FinishTerminalReturn();
+  }
+
+  /** USEFUL HELPER FUNCTIONS **/
 
   private void ScrollToBottom()
   {
@@ -190,18 +245,6 @@ public class TerminalManager : MonoBehaviour
 
     EventController.InitHackingUI();
 
-  }
-
-  // 
-  private void BasicTerminalReturn()
-  {
-    AddCommandHistoryLine(userInputField.text);
-    SetInputFieldToBottom();
-    // Move scroll rect all the way down to bottom line
-    ScrollToBottom();
-    // Refocus the input field
-    RefocusInputField();
-    ClearInputField();
   }
 
   private bool StringMatches(string str1, string str2)

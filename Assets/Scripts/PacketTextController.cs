@@ -28,9 +28,9 @@ public class PacketTextController : MonoBehaviour
     TimePassed += Time.deltaTime;
     if (TimePassed >= BaseTimer + Random.Range(0, 1f))
     {
-      Debug.Log("Generating new hex");
+      // Debug.Log("Generating new hex");
       var hex = GenerateRandomPacket();
-      Debug.Log("Hex is" + hex);
+      // Debug.Log("Hex is" + hex);
       TextObject.text = hex;
       TimePassed = 0f;
     }
@@ -47,7 +47,7 @@ public class PacketTextController : MonoBehaviour
   private string GenerateRandomHexValue()
   {
     var i = Random.Range(0, 2);
-    Debug.Log("I is" + i);
+    // Debug.Log("I is" + i);
     var hexVal = "";
     hexVal = (i == 0) ? ((char)Random.Range(65, 70)).ToString() : ((char)Random.Range(48, 57)).ToString();
     return hexVal;

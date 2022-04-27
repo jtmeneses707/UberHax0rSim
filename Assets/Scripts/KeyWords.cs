@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace HaxorSim
 {
-  public class KeyWords : ScriptableObject
+  public class KeyWords : MonoBehaviour
   {
     private List<string> actionWords = new List<string> { "run", "do", "attach", "create", "inject", "bypass", "do", "switch",
         "ruin", "destroy", "debug", "log", "trespass", "initialize", "create", "triangulate", "git", "vim", "post", "get", "delete", "echo"};

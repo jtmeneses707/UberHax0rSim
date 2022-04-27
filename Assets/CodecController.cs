@@ -64,5 +64,10 @@ public class CodecController : MonoBehaviour
     // }
   }
 
+  public void ClearText()
+  {
+    CodecTextController.ClearText();
+  }
+
 
 }

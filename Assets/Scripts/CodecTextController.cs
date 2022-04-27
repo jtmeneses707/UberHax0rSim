@@ -6,15 +6,18 @@ namespace HaxorSim
 {
   public class CodecTextController : MonoBehaviour
   {
-    private string StartingText = "Let's take The Corporation down! You're a great hacker. You got this. Get ready. Type hack start whenever you're ready...";
+    private string StartingText = "Let's take those corpos down down! You're a great hacker. You're ready for this. Type \'hack start\' whenever you're set...";
 
     private List<string> NegativeResponses = new List<string> {
-    "I thought you were supposed to be great at this!", "What the hell happened?", "What a scrub...", "You've got to be kidding me...",
-    "What a failure."
+    "I thought you were supposed to be great at this?", "What the hell happened?", "What a scrub...", "You've got to be kidding me...",
+    "What a failure.", "So disappointing.", "What even was that?", "Ugh. Kinda cringe...", "Dude. Not cool.", "Not rad.", "That was the opposite of cool.",
+    "Ugh ur a n00b.", "Uhhh? No?", "Do better."
   };
 
     private List<string> PositiveResponses = new List<string> {
-    "That'll teach them!", "What a boss!", "This is epic.", "Go crazy!", "Just wow!", "Damn you might be even better than me"
+    "That'll teach them!", "What a boss!", "This is epic.", "Go crazy!", "Just wow!", "Damn you might be even better than me...", "Holy crap!",
+    "That was totally radical dude...", "Rad!", "Overkill!", "Like woah dude...", "Follow the white rabbit.", "You're in the zone!", "Keep it up!",
+    "They didn't see that coming..."
   };
 
 
@@ -22,9 +25,11 @@ namespace HaxorSim
     [SerializeField]
     private CodecTextWriter CodecWriter;
 
+    private Coroutine routine;
+
     public enum CodecWriterFlags
     {
-      Intro, GoodEnd, BadEnd, FailedHack, SuccessfulHack
+      Intro, GoodEnd, BadEnd, FailedHack, SuccessfulHack, Gameplay,
     }
 
     void Start()
@@ -42,6 +47,10 @@ namespace HaxorSim
     // Flag is needed as context so that the Writer knows which text to write.
     public void Notify(CodecWriterFlags flag)
     {
+      if (routine != null)
+      {
+        StopCoroutine(routine);
+      }
       var textToWrite = "";
       switch (flag)
       {
@@ -62,10 +71,19 @@ namespace HaxorSim
             textToWrite = PositiveResponses[ind];
             break;
           }
+
+        default:
+          {
+            textToWrite = "";
+            break;
+          }
+          // case (CodecWriterFlag)
       }
 
       // Start writing text to object. 
-      StartCoroutine(CodecWriter.WriteTextToObject(textToWrite));
+
+      routine = StartCoroutine(CodecWriter.WriteTextToObject(textToWrite));
+      // CoroutineRunning = false;
     }
 
     public string getIntroText()
@@ -76,6 +94,11 @@ namespace HaxorSim
     public bool IsDoneWriting()
     {
       return CodecWriter.IsDoneWriting();
+    }
+
+    public void ClearText()
+    {
+      CodecWriter.ClearText();
     }
   }
 }
