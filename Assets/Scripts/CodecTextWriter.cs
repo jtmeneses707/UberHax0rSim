@@ -27,6 +27,9 @@ public class CodecTextWriter : MonoBehaviour
 
   [SerializeField]
   private float DelayBeforeClear;
+
+  [SerializeField]
+  private bool WipeScreenAfterDelay;
   public IEnumerator WriteTextToObject(string inputText)
   {
     // if (DoneWriting)
@@ -43,8 +46,13 @@ public class CodecTextWriter : MonoBehaviour
       yield return new WaitForSecondsRealtime(DelayBetweenChar);
     }
     DoneWriting = true;
-    yield return new WaitForSecondsRealtime(DelayBeforeClear);
-    CodecTextContainer.SetActive(false);
+    if (WipeScreenAfterDelay)
+    {
+      yield return new WaitForSecondsRealtime(DelayBeforeClear);
+      CodecTextContainer.SetActive(false);
+    }
+
+
 
     // }
 

@@ -1946,6 +1946,7 @@ MonoBehaviour:
   DelayDoneWriting: 2
   CodecTextContainer: {fileID: 486976640}
   DelayBeforeClear: 2.5
+  WipeScreenAfterDelay: 0
 --- !u!114 &633820205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5294,7 +5295,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: a63124405c704784aaa8954ed702400f, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.303
+  m_Volume: 0.28
   m_Pitch: 1
   Loop: 0
   Mute: 0
