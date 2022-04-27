@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using HaxorSim;
-using ColorPalette = HaxorSim.ColorPalette.Colors;
+// using ColorPalette = HaxorSim.ColorPalette.Colors;
 using Flag = HaxorSim.CodecTextController.CodecWriterFlags;
 public class TerminalManager : MonoBehaviour
 {
@@ -42,6 +42,17 @@ public class TerminalManager : MonoBehaviour
 
 
 
+  string RaisinBlack = "#62335";
+  string Salmon = "#F27A70";
+  string OldLace = "#FDF6EA";
+  string RedSalsa = "#FD404A";
+  string TurquoiseBlue = "#36F9ED";
+  string Aquamarine = "#71EEB2";
+
+
+
+
+
   public void Start()
   {
     // userInputField.DeactivateInputField();
@@ -54,38 +65,6 @@ public class TerminalManager : MonoBehaviour
 
   private void Update()
   {
-    // Continue to check for "start hack"
-    // if (EventController.GetCurrentEvent() == Flag.Intro)
-    // {
-    //   if (userInputField.text != "" && Input.GetKeyDown(KeyCode.Return))
-    //   {
-    //     if (!StringMatches(userInputField.text, "hack start"))
-    //     {
-    //       Debug.Log("String Didnt Match");
-    //       var storedInput = userInputField.text;
-
-    //       ClearInputField();
-
-    //       // Create new directory line to mimic history of commands.
-    //       AddCommandHistoryLine(storedInput);
-
-    //       // Move user input back to end
-    //       userInputLine.transform.SetAsLastSibling();
-
-    //       // Move scroll rect all the way down to bottom line
-    //       ScrollToBottom();
-
-    //       // Refocus the input field
-    //       RefocusInputField();
-    //       return;
-    //     }
-    //     else
-    //     {
-    //       EventController.InitHackingUI();
-    //     }
-    //   }
-    // }
-
     if (Input.anyKeyDown)
     {
       RefocusInputField();
@@ -105,6 +84,10 @@ public class TerminalManager : MonoBehaviour
           if (StringMatches(storedInput, "hack start"))
           {
             StartHack();
+            AddCommandHistoryLine(storedInput);
+            StringToMatch = EventController.GenerateNewCommand();
+            CreateResponseLine("New command: " + StringToMatch);
+            FinishTerminalReturn();
           }
           else
           {
@@ -120,32 +103,6 @@ public class TerminalManager : MonoBehaviour
     {
       GameplayTerminalReturn();
     }
-
-
-    // if (StringMatches(StringToMatch, userInputField.text) && EventController.GetCurrentEvent() == Flag.Intro)
-    // {
-    //   EventController.InitHackingUI();
-    // }
-
-    // else if (!StringMatches)
-    // Stored Input Field
-    // var storedInput = userInputField.text;
-
-    // ClearInputField();
-
-    // // Create new directory line to mimic history of commands.
-    // AddCommandHistoryLine(storedInput);
-
-    // SetInputFieldToBottom();
-
-
-    // // Move scroll rect all the way down to bottom line
-    // ScrollToBottom();
-
-    // // Refocus the input field
-    // RefocusInputField();
-
-
   }
 
   private void ClearInputField()
@@ -174,11 +131,38 @@ public class TerminalManager : MonoBehaviour
 
     // Ensure new line is at end of vertical layout.
     // msg.transform.SetSiblingIndex(commandList.transform.childCount - 1);
-    SetInputFieldToBottom();
+    msg.transform.SetAsLastSibling();
+
+    // SetInputFieldToBottom();
 
     // Set text of new Command history line.
 
     msg.GetComponentsInChildren<Text>()[1].text = userInput;
+  }
+
+  private void AddFailedHackResponse()
+  {
+    var str = $"<color={RedSalsa}>COMMAND HAS FAILED.</color>";
+    CreateResponseLine(str);
+  }
+
+  private void AddSuccessfullHackResponse()
+  {
+    var str = $"<color={TurquoiseBlue}>COMMAND HAS SUCCEEDED.</color>";
+    CreateResponseLine(str);
+  }
+
+  private void CreateResponseLine(string inputString)
+  {
+    Vector2 commandListSize = commandList.GetComponent<RectTransform>().sizeDelta;
+    // Get vertical spacing between each line in the vertical layout group
+    var spacing = verticalLayoutGroup.spacing;
+    // Get vertical height of a line of text. 
+    var verticalHeight = directoryLine.GetComponent<RectTransform>().sizeDelta.y;
+    // Grow the CommandLineContainer vertically
+    commandList.GetComponent<RectTransform>().sizeDelta = new Vector2(commandListSize.x, commandListSize.y + spacing + verticalHeight);
+    GameObject msg = Instantiate(repsonseLine, commandList.transform);
+    msg.GetComponentInChildren<Text>().text = inputString;
   }
 
   private void BasicTerminalReturn()
@@ -207,17 +191,33 @@ public class TerminalManager : MonoBehaviour
     if (StringMatches(StringToMatch, userInputField.text))
     {
       EventController.Notify(Flag.SuccessfulHack);
+      AddSuccessfullHackResponse();
     }
     else
     {
       EventController.Notify(Flag.FailedHack);
+      AddFailedHackResponse();
     }
     StringToMatch = EventController.GenerateNewCommand();
-    Debug.Log("String to match" + StringToMatch);
+    CreateResponseLine("New command: " + StringToMatch);
+    // Debug.Log("String to match" + StringToMatch);
     FinishTerminalReturn();
   }
 
   /** USEFUL HELPER FUNCTIONS **/
+
+  private void GrowCommandLineContainer()
+  {
+    // Size of the command entire command line.
+    Vector2 commandListSize = commandList.GetComponent<RectTransform>().sizeDelta;
+
+    // Get vertical spacing between each line in the vertical layout group
+    var spacing = verticalLayoutGroup.spacing;
+    // Get vertical height of a line of text. 
+    var verticalHeight = directoryLine.GetComponent<RectTransform>().sizeDelta.y;
+    // Grow the CommandLineContainer vertically
+    commandList.GetComponent<RectTransform>().sizeDelta = new Vector2(commandListSize.x, commandListSize.y + spacing + verticalHeight);
+  }
 
   private void ScrollToBottom()
   {

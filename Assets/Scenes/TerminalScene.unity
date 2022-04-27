@@ -1386,7 +1386,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: haxor@l33tPC:~$
+  m_Text: <color=#71EEB2>haxor@l33tPC</color>:~$
 --- !u!222 &455523398
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1945,6 +1945,7 @@ MonoBehaviour:
   DelayBetweenChar: 0.05
   DelayDoneWriting: 2
   CodecTextContainer: {fileID: 486976640}
+  DelayBeforeClear: 2.5
 --- !u!114 &633820205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3328,7 +3329,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.16051137, g: 1, b: 0, a: 1}
+  m_Color: {r: 0.9716981, g: 0.9716981, b: 0.9716981, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

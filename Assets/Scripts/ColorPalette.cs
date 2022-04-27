@@ -6,14 +6,15 @@ namespace HaxorSim
 {
   public class ColorPalette : MonoBehaviour
   {
-    public enum Colors
+
+    public class Colors
     {
-      RaisinBlack = 0x262335,
-      Salmon = 0xF27A70,
-      OldLace = 0xFDF6EA,
-      RedSalsa = 0xFD404A,
-      TurquoiseBlue = 0x36F9ED
-      //{"Raisin Black":"262335","Salmon":"F27A70","Old Lace":"FDF6EA","Red Salsa":"FD404A","Turquoise Blue":"36F9ED"}
+      public string RaisinBlack = "#62335";
+      public string Salmon = "#F27A70";
+      public string OldLace = "#FDF6EA";
+      public string RedSalsa = "#FD404A";
+      public string TurquoiseBlue = "36F9ED";
+
     }
   }
 }
