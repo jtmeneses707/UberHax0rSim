@@ -1883,8 +1883,8 @@ GameObject:
   - component: {fileID: 633820205}
   - component: {fileID: 633820204}
   - component: {fileID: 633820206}
-  - component: {fileID: 633820207}
   - component: {fileID: 633820208}
+  - component: {fileID: 633820209}
   m_Layer: 0
   m_Name: LogicController
   m_TagString: Untagged
@@ -1911,7 +1911,7 @@ MonoBehaviour:
   scrollRect: {fileID: 609068358}
   commandList: {fileID: 247634620}
   verticalLayoutGroup: {fileID: 247634624}
-  EventController: {fileID: 633820207}
+  EventController: {fileID: 0}
   StringToMatch: 
   CodecTextWriter: {fileID: 633820204}
 --- !u!4 &633820203
@@ -1945,7 +1945,7 @@ MonoBehaviour:
   DelayBetweenChar: 0.05
   DelayDoneWriting: 2
   CodecTextContainer: {fileID: 486976640}
-  DelayBeforeClear: 2.5
+  DelayBeforeClear: 100
 --- !u!114 &633820205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1953,7 +1953,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 633820201}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2ca67a65e0ea79642b087b0e52d1fe60, type: 3}
   m_Name: 
@@ -1977,29 +1977,6 @@ MonoBehaviour:
   CodecReady: 0
   CodecContainer: {fileID: 1119216024}
   SecondsPerInterpolation: 0.001
---- !u!114 &633820207
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 633820201}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8252c91bcd13c541a6b5ea471fac304, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentEvent: 0
-  HackingUI: {fileID: 216578441}
-  CodecController: {fileID: 633820206}
-  KeyWordGenerator: {fileID: 633820208}
-  StartTimer: 0
-  GameLength: 120
-  DefenseLength: 15
-  CurrentTime: 0
-  CurrentDefenseTime: 0
-  ProgressBar: {fileID: 399226218}
-  DefenseBar: {fileID: 1054486628}
 --- !u!114 &633820208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2012,6 +1989,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 595012d63811cba4391c952a5017b0d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &633820209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 633820201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 337b8212f7793b44eb10f82a9ec8e4ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CodecText: {fileID: 1157004755}
+  CodecTextController: {fileID: 633820205}
+  Type: 1
 --- !u!1 &757729929
 GameObject:
   m_ObjectHideFlags: 0

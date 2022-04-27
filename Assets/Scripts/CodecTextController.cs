@@ -76,6 +76,17 @@ namespace HaxorSim
             break;
           }
 
+        case (CodecWriterFlags.BadEnd):
+          {
+            textToWrite = BadEnd;
+            break;
+          }
+        case (CodecWriterFlags.GoodEnd):
+          {
+            textToWrite = GoodEnd;
+            break;
+          }
+
         default:
           {
             textToWrite = "";

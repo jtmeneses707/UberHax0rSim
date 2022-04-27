@@ -40,6 +40,9 @@ public class EventController : MonoBehaviour
   [SerializeField]
   private Text DefenseBar;
 
+  [SerializeField]
+  private AudioSource AudioSource;
+
   private float LengthOfProgressBarSegment;
 
   private float LengthOfDefenseBarSegment;
@@ -92,6 +95,7 @@ public class EventController : MonoBehaviour
     currentEvent = Flag.Gameplay;
     CodecController.NotifyCodec(Flag.Gameplay);
     StartTimer = true;
+    AudioSource.Play();
   }
 
   public void Notify(Flag flag)
