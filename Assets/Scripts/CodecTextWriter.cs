@@ -14,33 +14,40 @@ public class CodecTextWriter : MonoBehaviour
   private bool DoneWriting;
 
   [SerializeField]
-  private float Delay = 0.1f;
+  private float DelayBetweenChar = 0.1f;
+
+  [SerializeField]
+  private float DelayDoneWriting = 1f;
+
+  [SerializeField]
+  private bool StayWhenDoneWriting = true;
+
+  [SerializeField]
+  private GameObject CodecTextContainer;
   public IEnumerator WriteTextToObject(string inputText)
   {
+    CodecTextContainer.SetActive(true);
+
     ClearText();
+
     DoneWriting = false;
 
     foreach (var ch in inputText)
     {
       TargetText.text += ch;
-      yield return new WaitForSeconds(Delay);
+      yield return new WaitForSecondsRealtime(DelayBetweenChar);
     }
-
-    yield return new WaitForSeconds(2f);
     DoneWriting = true;
+    yield return new WaitForSecondsRealtime(2f);
+
+
+    if (!StayWhenDoneWriting)
+    {
+      // ClearText();
+      CodecTextContainer.SetActive(false);
+    }
   }
   // Start is called before the first frame update
-  void Start()
-  {
-    ClearText();
-    DoneWriting = true;
-  }
-
-  // Update is called once per frame
-  void Update()
-  {
-
-  }
 
   void ClearText()
   {
@@ -50,6 +57,11 @@ public class CodecTextWriter : MonoBehaviour
   public bool IsDoneWriting()
   {
     return DoneWriting;
+  }
+
+  void SetStayWhenDoneWriting(bool b)
+  {
+    StayWhenDoneWriting = b;
   }
 
 }

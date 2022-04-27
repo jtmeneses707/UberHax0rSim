@@ -34,10 +34,10 @@ namespace HaxorSim
         var contextWord = "";
 
         // Create a longer command from adding more context words
-        for (int j = 0; i < difficulty; i++)
+        for (int j = 0; j < difficulty; j++)
         {
           // Add space if command has more than one context word.
-          if (i > 1)
+          if (j > 1)
           {
             contextWord += " ";
           }
@@ -47,7 +47,6 @@ namespace HaxorSim
 
         var fullCommand = actionWord + " " + contextWord;
         commands.Add(fullCommand);
-
       }
 
 
@@ -68,7 +67,7 @@ namespace HaxorSim
 
     private string getRandomString(List<string> list)
     {
-      var index = Random.Range(0, list.Count - 1);
+      var index = Random.Range(0, list.Count);
       return list[index];
     }
   }

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using HaxorSim;
 using ColorPalette = HaxorSim.ColorPalette.Colors;
+using Flag = HaxorSim.CodecTextController.CodecWriterFlags;
 public class TerminalManager : MonoBehaviour
 {
 
@@ -30,15 +31,16 @@ public class TerminalManager : MonoBehaviour
   [SerializeField]
   private VerticalLayoutGroup verticalLayoutGroup;
 
+  [SerializeField]
+  private EventController EventController;
+
+  [SerializeField]
+  private string StringToMatch;
+
 
   public void Start()
   {
     RefocusInputField();
-
-    //userInputLine = userInputField.textComponent;
-
-    //keyWords.CreateCommand()
-
   }
 
   // Creates events
@@ -46,6 +48,37 @@ public class TerminalManager : MonoBehaviour
 
   private void Update()
   {
+    // Continue to check for "start hack"
+    // if (EventController.GetCurrentEvent() == Flag.Intro)
+    // {
+    //   if (userInputField.text != "" && Input.GetKeyDown(KeyCode.Return))
+    //   {
+    //     if (!StringMatches(userInputField.text, "hack start"))
+    //     {
+    //       Debug.Log("String Didnt Match");
+    //       var storedInput = userInputField.text;
+
+    //       ClearInputField();
+
+    //       // Create new directory line to mimic history of commands.
+    //       AddCommandHistoryLine(storedInput);
+
+    //       // Move user input back to end
+    //       userInputLine.transform.SetAsLastSibling();
+
+    //       // Move scroll rect all the way down to bottom line
+    //       ScrollToBottom();
+
+    //       // Refocus the input field
+    //       RefocusInputField();
+    //       return;
+    //     }
+    //     else
+    //     {
+    //       EventController.InitHackingUI();
+    //     }
+    //   }
+    // }
 
     if (Input.anyKeyDown)
     {
@@ -54,29 +87,52 @@ public class TerminalManager : MonoBehaviour
 
     if (userInputField.text != "" && Input.GetKeyDown(KeyCode.Return))
     {
-
-      // Stored Input Field
+      NormalizeUserInput();
       var storedInput = userInputField.text;
+      // Gameplay loop for init hack start gane.
+      if (EventController.GetCurrentEvent() == Flag.Intro)
+      {
+        if (StringMatches(storedInput, "hack start"))
+        {
+          StartHack();
+        }
+        BasicTerminalReturn();
+      }
 
-      ClearInputField();
+      // Basic gameplay loop
+      else
+      {
 
-      // Create new directory line to mimic history of commands.
-      AddCommandHistoryLine(storedInput);
+      }
 
-      // Move user input back to end
-      userInputLine.transform.SetAsLastSibling();
+      // if (StringMatches(StringToMatch, userInputField.text) && EventController.GetCurrentEvent() == Flag.Intro)
+      // {
+      //   EventController.InitHackingUI();
+      // }
 
-      // Move scroll rect all the way down to bottom line
-      ScrollToBottom();
+      // else if (!StringMatches)
+      // Stored Input Field
+      // var storedInput = userInputField.text;
 
-      // Refocus the input field
-      RefocusInputField();
+      // ClearInputField();
+
+      // // Create new directory line to mimic history of commands.
+      // AddCommandHistoryLine(storedInput);
+
+      // SetInputFieldToBottom();
+
+
+      // // Move scroll rect all the way down to bottom line
+      // ScrollToBottom();
+
+      // // Refocus the input field
+      // RefocusInputField();
     }
   }
 
   private void ClearInputField()
   {
-    Debug.Log("CUrrent text is" + directoryLine.GetComponentInChildren<Text>().text);
+    // Debug.Log("CUrrent text is" + directoryLine.GetComponentInChildren<Text>().text);
     //directoryLine.GetComponentInChildren<Text>().text = Time.time.ToString();
     userInputField.text = "";
   }
@@ -103,9 +159,10 @@ public class TerminalManager : MonoBehaviour
     msg.transform.SetAsLastSibling();
 
     // Set text of new Command history line.
-    //msg.GetComponentInChildren<Text>()[1].text = userInputLine.text;
     msg.GetComponentsInChildren<Text>()[1].text = userInput;
   }
+
+  // private void
 
   private void ScrollToBottom()
   {
@@ -116,6 +173,44 @@ public class TerminalManager : MonoBehaviour
   {
     userInputField.ActivateInputField();
     userInputField.Select();
+  }
+
+  private void NormalizeUserInput()
+  {
+    userInputField.text = userInputField.text.Trim();
+  }
+
+  private void SetInputFieldToBottom()
+  {
+    userInputLine.transform.SetAsLastSibling();
+  }
+
+  private void StartHack()
+  {
+
+    EventController.InitHackingUI();
+
+  }
+
+  // 
+  private void BasicTerminalReturn()
+  {
+    AddCommandHistoryLine(userInputField.text);
+    SetInputFieldToBottom();
+    // Move scroll rect all the way down to bottom line
+    ScrollToBottom();
+    // Refocus the input field
+    RefocusInputField();
+    ClearInputField();
+  }
+
+  private bool StringMatches(string str1, string str2)
+  {
+    if (str2 != str1)
+    {
+      return false;
+    }
+    return true;
   }
 }
 
